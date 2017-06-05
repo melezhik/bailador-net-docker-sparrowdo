@@ -19,12 +19,25 @@ directory-create '/root/work', %(
 bash q:to/HERE/, %(user => $user );
   set -e
   cd ~/work
+  if test -d  ./bailador; then
+    cd bailador
+    git pull
+    cd ../
+  else
+    git clone https://github.com/Bailador/Bailador.git
+    cd ../
+  fi
+HERE
+
+bash q:to/HERE/, %(user => $user );
+  set -e
+  cd ~/work
   if test -d  ./bailador.net; then
     cd bailador.net
     git pull
     cd ../
   else
-    git clone https://github.com/Bailador/bailador.net.git
+    git clone https://github.com/melezhik/bailador.net.git
   fi
 HERE
 
