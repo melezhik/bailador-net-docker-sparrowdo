@@ -1,15 +1,22 @@
+my $user = 'root';
+
 package-install 'ruby';
+
+bash 'zef install Path::Iterator';
+
+bash 'zef install https://github.com/Bailador/Bailador.git';
+bash 'zef install Text::Markdown';
 
 bash 'gem install sass --no-ri --no-rdoc';
 
-user 'gabor';
+user $user;
 
-directory-create '/home/gabor/work', %(
+directory-create '/root/work', %(
   recursive => 1 ,
-  owner => 'gabor',
+  owner => $user,
 );
 
-bash q:to/HERE/, %(user => 'gabor');
+bash q:to/HERE/, %(user => $user );
   set -e
   cd ~/work
   if test -d  ./bailador.net; then
@@ -21,5 +28,5 @@ bash q:to/HERE/, %(user => 'gabor');
   fi
 HERE
 
-bash "cd ~/work/bailador.net && sass public/scss/main.scss public/css/style.css", %( user => 'gabor' );
+bash "cd ~/work/bailador.net && sass public/scss/main.scss public/css/style.css", %( user => $user );
 
