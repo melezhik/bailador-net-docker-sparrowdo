@@ -1,0 +1,25 @@
+package-install 'ruby';
+
+bash 'gem install sass --no-ri --no-rdoc';
+
+user 'gabor';
+
+directory-create '/home/gabor/work', %(
+  recursive => 1 ,
+  owner => 'gabor',
+);
+
+bash q:to/HERE/, %(user => 'gabor');
+  set -e
+  cd ~/work
+  if test -d  ./bailador.net; then
+    cd bailador.net
+    git pull
+    cd ../
+  else
+    git clone https://github.com/Bailador/bailador.net.git
+  fi
+HERE
+
+bash "cd ~/work/bailador.net && sass public/scss/main.scss public/css/style.css", %( user => 'gabor' );
+
